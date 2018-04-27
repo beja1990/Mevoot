@@ -1980,7 +1980,7 @@ public class DBServices
 
 
     //--------------------------------------------------------------------
-    // User Request by Profession - User mini dashboard
+    // User Classes by Profession - User mini dashboard
     //--------------------------------------------------------------------
     public List<Report> StudentClassesByProfession(string startDate, string endDate, string conString, string userId)
     {
@@ -1990,8 +1990,8 @@ public class DBServices
         try
         {
             con = connect(conString); // create a connection to the database using the connection String defined in the web config file
-            String selectSTR = "select Pro_Id, Pro_Title, count(1) as 'amount' from Requests inner join Lesson on req_actLes_id = Les_Id inner join Profession on Pro_Id = Les_Pro_Id WHERE req_stu_id = '" + userId + "' AND req_status = '1' and request_date BETWEEN '" + startDate + "' AND '" + endDate + "' group by Pro_Id, Pro_Title ";
-            SqlCommand cmd = new SqlCommand(selectSTR, con);
+            String selectSTR2 = "select Pro_Id, Pro_Title, count(1) as 'amount' from Requests inner join Lesson on req_actLes_id = Les_Id inner join Profession on Pro_Id = Les_Pro_Id WHERE req_stu_id = '" + userId + "' AND req_status = '1' and request_date BETWEEN '" + startDate + "' AND '" + endDate + "' group by Pro_Id, Pro_Title ";
+            SqlCommand cmd = new SqlCommand(selectSTR2, con);
 
             // get a reader
             SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end

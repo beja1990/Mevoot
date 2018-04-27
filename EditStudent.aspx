@@ -52,22 +52,15 @@
             if (DateFilter.startDate == "" && DateFilter.endDate == "") {
                 DateFilter.startDate = "1970-01-01";
                 DateFilter.endDate = "3000-01-01";
-
-
             }
             else if (DateFilter.startDate == "") {
-                DateFilter.startDate = "1970-01-01";
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות עד תאריך " + DateFilter.endDate;
+                DateFilter.startDate = "1970-01-01";              
             }
 
             else if (DateFilter.endDate == "") {
-                DateFilter.endDate = "3000-01-01";
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות החל מתאריך " + DateFilter.startDate;
+                DateFilter.endDate = "3000-01-01";        
             }
-            else {
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות בתאריכים " + DateFilter.endDate + " - " + DateFilter.startDate;
 
-            }
 
             DateFilter.userId = document.getElementById('<%=IdTB.ClientID%>').value;
             var dataString = JSON.stringify(DateFilter);
@@ -103,7 +96,7 @@
                                 type: 'column'
                             },
                             title: {
-                                text: ' '
+                                text: ' בקשות לפי מקצועות'
                             },
                             yAxis: {
                                 allowDecimals: false,
@@ -168,7 +161,7 @@
                                 type: 'pie'
                             },
                             title: {
-                                text: ' '
+                                text: 'תגבורים לפי מקצועות '
                             },
                             series: [{
 
@@ -211,7 +204,7 @@
                         });
                     });
                 }
-            });
+            });  //End ajax call for student classes
 
         }
 
@@ -268,6 +261,10 @@
 
         #report_PH{
             margin-bottom:100px;
+        }
+
+        .filterDiv{
+            height:150px;
         }
     </style>
 
@@ -395,20 +392,20 @@
                 </h2>
             </div>
             <div id="report_PH">
-                <div class="row center-block">
+                <div class="row filterDiv">
                     <input type="text" id="endDate" placeholder="בחר תאריך סיום" name="endDatename" title="במידה ולא נבחר תאריך, תאריך הסיום יהיה היום" />
                     <input type="text" id="startDate" placeholder="בחר תאריך התחלה" name="startDatename" />
-                    <input type="button" id="profession_reportBTN" value="סנן" class="btn btn-sm filterBTN" onclick="showReport()" style="float: right;" />
+                    <input type="button" id="profession_reportBTN" value="סנן" class="btn btn-sm filterBTN" onclick="showReport()" style="float: right; margin:-5px;" />
                 </div>
                 <h3 id="title"></h3>
                 <div class="row">
-                    <div id="chart" style="width: 50%; margin: 0 auto; float:right;"></div>
+                    <div class="col-lg-6" id="chart" style="width: 50%;margin-top:20px;"></div>
                     <br />
-                    <div id="pie" style="width: 50%; margin: 0 auto;float:right;"></div>
+                    <div class="col-lg-6" id="pie" style="width: 50%; "></div>
                 </div>
                 <%--  כמות בקשות לפי מקצוע לתלמיד --%>
 
-                <table id="requestsChartbyProfession" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
+                <table id="requestsChartbyProfession" class="table table-bordered" style="display:none; margin: 0 auto; width: 200px; direction: rtl;">
                     <thead>
                         <tr>
                             <th>מקצוע</th>
@@ -420,7 +417,7 @@
                 </table>
 
                 <%--   כמות תגבורים שהתלמיד נרשם אליהם ואושרו לפי מקצוע--%>
-                <table id="ClassesbyProfessionCountPie" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
+                <table id="ClassesbyProfessionCountPie" class="table table-bordered" style="display:none; margin: 0 auto; width: 200px; direction: rtl;">
                     <thead>
                         <tr>
 
