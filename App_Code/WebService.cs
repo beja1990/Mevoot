@@ -82,4 +82,35 @@ public class WebService : System.Web.Services.WebService
         string jsonStringGetProfession = js.Serialize(ProfessionCount);
         return jsonStringGetProfession;
     }
+
+    //Student Request by Profession Web methods
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string StudentRequestsByProfession(string startDate, string endDate,string userId)//מחזיר כמות בקשות לפי מקצוע בתאריכים הנתונים
+    {
+
+        Report r = new Report();
+        List<Report> StudentRequestsByProfession = r.StudentRequestsByProfession(startDate, endDate, userId);
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonStringGetProfession = js.Serialize(StudentRequestsByProfession);
+        return jsonStringGetProfession;
+    }
+
+    //Student classes by Profession Web methods
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string StudentClassesByProfession(string startDate, string endDate, string userId)//מחזיר כמות בקשות לפי מקצוע בתאריכים הנתונים
+    {
+
+        Report r = new Report();
+        List<Report> StudentClassesByProfession = r.StudentClassesByProfession(startDate, endDate, userId);
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonStringGetProfession = js.Serialize(StudentClassesByProfession);
+        return jsonStringGetProfession;
+    }
+
 }

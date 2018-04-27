@@ -202,6 +202,7 @@ public partial class ClassesForStudent : System.Web.UI.Page
         int is_permanent = 0; //ther is only one-time request for now
         int req_type = 0; // הגשת בקשה להרשמה מקבלת סוג=0
         int flg = 0;
+        DateTime nowDate =  DateTime.Now;
 
         DataTable dt = this.GetRequests();
         foreach (DataRow dr in dt.Rows)
@@ -211,6 +212,7 @@ public partial class ClassesForStudent : System.Web.UI.Page
             int lesNum = Convert.ToInt32(dr["req_actLes_id"]);
             double ReqStuID = Convert.ToDouble(dr["req_stu_id"]);
             int reqType = Convert.ToInt32(dr["req_type"]);
+        
 
             if (dat == actlDate && lesNum == actLes_id && ReqStuID == reqStuId && reqType == req_type)
             {
@@ -221,7 +223,7 @@ public partial class ClassesForStudent : System.Web.UI.Page
         {
             try
             {
-                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type);
+                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type, nowDate);
                 int numEffected = req.InsertRequest();
             }
             catch (Exception ex)

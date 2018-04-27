@@ -2,8 +2,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="https://code.jquery.com/jquery.js"></script>
-     <link href="assets/plugins/toastr/toastr.css" rel="stylesheet" />
+    <link href="assets/plugins/toastr/toastr.css" rel="stylesheet" />
     <script src="assets/plugins/toastr/toastr.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
     <script>
         toastr.options = {
             "closeButton": false,
@@ -23,6 +27,196 @@
             "hideMethod": "fadeOut",
 
         }
+
+        $(function () {
+            $("#startDate").datepicker(
+                { dateFormat: 'yy-mm-dd' }
+                );
+        });
+        $(function () {
+            $("#endDate").datepicker(
+                { dateFormat: 'yy-mm-dd' }
+                );
+        });
+
+        var DateFilter = {
+            startDate: null,
+            endDate: null,
+            userId: null
+        };
+
+
+        function showReport() {
+            DateFilter.startDate = $('#startDate').val();
+            DateFilter.endDate = $('#endDate').val();
+            if (DateFilter.startDate == "" && DateFilter.endDate == "") {
+                DateFilter.startDate = "1970-01-01";
+                DateFilter.endDate = "3000-01-01";
+
+
+            }
+            else if (DateFilter.startDate == "") {
+                DateFilter.startDate = "1970-01-01";
+                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות עד תאריך " + DateFilter.endDate;
+            }
+
+            else if (DateFilter.endDate == "") {
+                DateFilter.endDate = "3000-01-01";
+                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות החל מתאריך " + DateFilter.startDate;
+            }
+            else {
+                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות בתאריכים " + DateFilter.endDate + " - " + DateFilter.startDate;
+
+            }
+
+            DateFilter.userId = document.getElementById('<%=IdTB.ClientID%>').value;
+            var dataString = JSON.stringify(DateFilter);
+
+            $.ajax({
+                type: 'POST',
+                url: 'WebService.asmx/StudentRequestsByProfession',
+                data: dataString,
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                success: function (data) {
+                    var StudentRequestsByProfessionCountList = $.parseJSON(data.d);
+                    //יצירת גרף עמודות
+                    var tbody = $('#requestsChartbyProfession').find('tbody');
+                    $(tbody).find('tr').remove();
+                    var str1 = "";
+                    StudentRequestsByProfessionCountList.forEach(function (profession) {
+                        str1 += '<tr>' +
+
+                            '<td>' + profession.Pro_title + '</td>' +
+                            '<td>' + profession.Amount + '</td>' +
+                            '</tr>';
+                    });
+                    tbody.append(str1);
+
+
+                    $(function () {
+                        $('#chart').highcharts({
+                            data: {
+                                table: 'requestsChartbyProfession'
+                            },
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: ' '
+                            },
+                            yAxis: {
+                                allowDecimals: false,
+                                title: {
+                                    text: 'כמות'
+                                }
+                            },
+                            series: [{
+
+                                showInLegend: false,
+                                color: "#6C6E87"
+
+                            }],
+                            plotOptions: {
+                                series: {
+                                    dataLabels: {
+                                        //color: '#B0B0B3',
+                                        enabled: true,
+                                    },
+                                }
+                            },
+
+
+                            tooltip: {
+
+                                enabled: false
+                            }
+                        });
+                    });
+
+                }
+            }); //End ajax call for student requests
+
+            $.ajax({
+                type: 'POST',
+                url: 'WebService.asmx/StudentClassesByProfession',
+                data: dataString,
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                success: function (data) {
+                    var StudentClassesByProfessionCountList = $.parseJSON(data.d);
+
+
+                    //יצירת הגרפים- עוגה
+                    var tbody = $('#ClassesbyProfessionCountPie').find('tbody');
+                    $(tbody).find('tr').remove();
+                    var str2 = "";
+                    StudentClassesByProfessionCountList.forEach(function (profession) {
+                        str2 += '<tr>' +
+                            '<td>' + profession.Pro_title + '</td>' +
+                            '<td>' + profession.Amount + '</td>' +
+                            '</tr>';
+                    });
+                    tbody.append(str2);
+
+                    $(function () {
+                        $('#pie').highcharts({
+                            data: {
+                                table: 'ClassesbyProfessionCountPie'
+                            },
+                            chart: {
+                                type: 'pie'
+                            },
+                            title: {
+                                text: ' '
+                            },
+                            series: [{
+
+                                showInLegend: true
+
+
+                            }],
+                            legend: {
+                                rtl: true
+                            },
+                            plotOptions: {
+                                pie: {
+                                    innerSize: 100,
+                                    depth: 45,
+                                    allowPointSelect: false,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false,
+                                        depth: 35,
+                                        format: '<b>{point.name}</b><br/>: {point.y}',
+                                        style: {
+                                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        },
+
+                                    }
+                                }
+                            },
+
+
+                            tooltip: {
+                                enabled: true,
+                                rtl: true,
+                                formatter: function () {
+                                    var name = this.point.name;
+                                    var quan = this.y;
+                                    var str = name + " - כמות  : " + quan + "";
+                                    return str;
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+
+        }
+
+        window.onload = showReport;
+
     </script>
     <style>
         ::-webkit-input-placeholder {
@@ -57,6 +251,24 @@
             right: 20px;
             bottom: 20px;
         }
+
+        #endDate, #startDate {
+            direction: rtl;
+            margin: 0 auto;
+            float: right;
+            margin-bottom: 100px;
+            margin-left: 40px;
+        }
+
+        .filterBTN {
+            margin: 10px;
+            background-color: #9fccdf;
+            width: 100px;
+        }
+
+        #report_PH{
+            margin-bottom:100px;
+        }
     </style>
 
 </asp:Content>
@@ -82,7 +294,7 @@
         </div>
     </section>
 
-    <!-- Starts contact form 1 -->
+    <!-- Starts contact form -->
     <div class="container">
         <div class="row cbRight">
             <asp:CheckBox ID="isEntitledCB" runat="server" />
@@ -124,7 +336,7 @@
 
                     <div class="form-group" style="text-align: center">
                         <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary rightTB" data-target="#confirmationModal" />
-                        <button id="deletePopUp" class="btn btn-danger" style="float:left;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                        <button id="deletePopUp" class="btn btn-danger" style="float: left;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
                     </div>
 
                 </div>
@@ -173,22 +385,61 @@
             </div>
 
         </div>
-        <!-- Ends contact form 1 -->
-    </div>
-<%--    <div id="confirmationModal" class="modal fade modal-sm modaltb" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content btn">
-                <div class="modal-header">
-                    <h5>התלמיד עודכן בהצלחה</h5>
-                    &nbsp
-                    <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" onclick="window.location='ShowStudents.aspx'">חזור למסך תלמידים</button>
+        <!-- Starts user dashboard -->
+        <div class="row">
+            <div class="sectionTitle text-center">
+                <h2>
+                    <span class="shape shape-left bg-color-4"></span>
+                    <span>נתוני תלמיד</span>
+                    <span class="shape shape-right bg-color-4"></span>
+                </h2>
+            </div>
+            <div id="report_PH">
+                <div class="row center-block">
+                    <input type="text" id="endDate" placeholder="בחר תאריך סיום" name="endDatename" title="במידה ולא נבחר תאריך, תאריך הסיום יהיה היום" />
+                    <input type="text" id="startDate" placeholder="בחר תאריך התחלה" name="startDatename" />
+                    <input type="button" id="profession_reportBTN" value="סנן" class="btn btn-sm filterBTN" onclick="showReport()" style="float: right;" />
                 </div>
+                <h3 id="title"></h3>
+                <div class="row">
+                    <div id="chart" style="width: 50%; margin: 0 auto; float:right;"></div>
+                    <br />
+                    <div id="pie" style="width: 50%; margin: 0 auto;float:right;"></div>
+                </div>
+                <%--  כמות בקשות לפי מקצוע לתלמיד --%>
+
+                <table id="requestsChartbyProfession" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
+                    <thead>
+                        <tr>
+                            <th>מקצוע</th>
+                            <th>כמות</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <%--   כמות תגבורים שהתלמיד נרשם אליהם ואושרו לפי מקצוע--%>
+                <table id="ClassesbyProfessionCountPie" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
+                    <thead>
+                        <tr>
+
+                            <th>מקצוע</th>
+                            <th>כמות</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
 
         </div>
-    </div>--%>
+        <!-- Ends user dashboard -->
+
+        <!-- Ends contact form -->
+    </div>
+
+
 
     <div id="deleteConfirmationModal" class="modal fade modal-md modaltb" role="dialog">
         <div class="modal-dialog">

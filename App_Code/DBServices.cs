@@ -1604,8 +1604,8 @@ public class DBServices
 
         StringBuilder sb = new StringBuilder();
         // use a string builder to create the dynamic string
-        sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}' , '{4}', '{5}')", re.Req_actLes_id, (re.Req_actLes_date).ToString("yyyy-MM-dd"), re.Req_stu_id, re.Req_status, re.Req_is_permanent, re.Req_type);
-        String prefix = "INSERT INTO Requests  " + "( req_actLes_id , req_actLes_date , req_stu_id ,req_status, req_is_permanent, req_type) ";
+        sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}' , '{4}', '{5}','{6}')", re.Req_actLes_id, (re.Req_actLes_date).ToString("yyyy-MM-dd"), re.Req_stu_id, re.Req_status, re.Req_is_permanent, re.Req_type, (re.Req_date).ToString("yyyy-MM-dd"));
+        String prefix = "INSERT INTO Requests  " + "( req_actLes_id , req_actLes_date , req_stu_id ,req_status, req_is_permanent, req_type, request_date) ";
         command = prefix + sb.ToString();
 
         return command;
@@ -1931,4 +1931,98 @@ public class DBServices
             }
         }
     }
+
+
+    //--------------------------------------------------------------------
+    // User Request by Profession - User mini dashboard
+    //--------------------------------------------------------------------
+    public List<Report> StudentRequestsByProfession(string startDate, string endDate, string conString, string userId)
+    {
+
+        List<Report> StudentRequestsByProfessionCountList = new List<Report>();
+        SqlConnection con = null;
+        try
+        {
+            con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+            String selectSTR = "select Pro_Id, Pro_Title, count(1) as 'amount' from Requests inner join Lesson on req_actLes_id = Les_Id inner join Profession on Pro_Id = Les_Pro_Id WHERE req_stu_id = '" + userId + "' AND req_status = '2' and request_date BETWEEN '" + startDate + "' AND '" + endDate + "' group by Pro_Id, Pro_Title ";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row               
+                Report r = new Report();
+                r.Id = Convert.ToInt32(dr["Pro_Id"]);
+                r.Pro_title = (string)dr["Pro_title"];
+                r.Amount = Convert.ToDouble(dr["amount"]);
+
+                StudentRequestsByProfessionCountList.Add(r);
+
+            }
+            return StudentRequestsByProfessionCountList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
+
+
+
+    //--------------------------------------------------------------------
+    // User Request by Profession - User mini dashboard
+    //--------------------------------------------------------------------
+    public List<Report> StudentClassesByProfession(string startDate, string endDate, string conString, string userId)
+    {
+
+        List<Report> StudentClassesByProfessionCountList = new List<Report>();
+        SqlConnection con = null;
+        try
+        {
+            con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+            String selectSTR = "select Pro_Id, Pro_Title, count(1) as 'amount' from Requests inner join Lesson on req_actLes_id = Les_Id inner join Profession on Pro_Id = Les_Pro_Id WHERE req_stu_id = '" + userId + "' AND req_status = '1' and request_date BETWEEN '" + startDate + "' AND '" + endDate + "' group by Pro_Id, Pro_Title ";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row               
+                Report r = new Report();
+                r.Id = Convert.ToInt32(dr["Pro_Id"]);
+                r.Pro_title = (string)dr["Pro_title"];
+                r.Amount = Convert.ToDouble(dr["amount"]);
+
+                StudentClassesByProfessionCountList.Add(r);
+
+            }
+            return StudentClassesByProfessionCountList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
+
+
+
 }

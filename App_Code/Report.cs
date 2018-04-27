@@ -63,5 +63,21 @@ public class Report
         return dbCountProfessionReport;
     }
 
+    public List<Report> StudentRequestsByProfession(string startDate, string endDate, string userId)// מחזיר כמות בקשות ממתינות לתלמיד לפי מקצועות
+    {
+        DBServices dbsReport = new DBServices();
+        List<Report> dbStudentRequestsByProfession = dbsReport.StudentRequestsByProfession(startDate, endDate, "studentDBConnectionString", userId);
+        return dbStudentRequestsByProfession;
+    }
+
+
+    public List<Report> StudentClassesByProfession(string startDate, string endDate, string userId)// מחזיר כמות בקשות ממתינות לתלמיד לפי מקצועות
+    {
+        DBServices dbsReport = new DBServices();
+        List<Report> dbStudentRequestsByProfession = dbsReport.StudentClassesByProfession(startDate, endDate, "studentDBConnectionString", userId);
+        return dbStudentRequestsByProfession;
+    }
+    
+
 
 }

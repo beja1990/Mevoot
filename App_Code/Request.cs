@@ -17,6 +17,7 @@ public class Request
     private int req_status;
     private int req_is_permanent;
     private int req_type;
+    private DateTime req_date;
 
     public Request()
     {
@@ -117,6 +118,19 @@ public class Request
         }
     }
 
+    public DateTime Req_date
+    {
+        get
+        {
+            return req_date;
+        }
+
+        set
+        {
+            req_date = value;
+        }
+    }
+
     public Request(int actLesId, DateTime actLesDate, double stuId, int reqStatus, int reqIsPermanent)
     {
 
@@ -138,6 +152,20 @@ public class Request
         Req_status = reqStatus;
         Req_is_permanent = reqIsPermanent;
         Req_type = reqType;
+
+
+    }
+
+    public Request(int actLesId, DateTime actLesDate, double stuId, int reqStatus, int reqIsPermanent, int reqType, DateTime req_date)
+    {
+
+        Req_actLes_id = actLesId; ;
+        Req_actLes_date = actLesDate;
+        Req_stu_id = stuId;
+        Req_status = reqStatus;
+        Req_is_permanent = reqIsPermanent;
+        Req_type = reqType;
+        Req_date = req_date;
 
 
     }

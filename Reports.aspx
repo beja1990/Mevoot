@@ -253,7 +253,7 @@
 
             <input type="button" id="display" value="הצג טבלת נתונים" class="btn btn-lg" onclick="showtable()" />
 
-            <input type="button" id="profession_reportBTN" value="מקצועות" class="btn btn-lg" onclick="showReport()" style="backface-color=" />
+            <input type="button" id="profession_reportBTN" value="מקצועות" class="btn btn-lg" onclick="showReport()" />
 
             <input type="button" id="requests_reportBTN" value="בקשות / ביטולים" class="btn btn-lg" onclick="" />
 
