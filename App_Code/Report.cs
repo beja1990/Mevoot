@@ -77,7 +77,24 @@ public class Report
         List<Report> dbStudentRequestsByProfession = dbsReport.StudentClassesByProfession(startDate, endDate, "studentDBConnectionString", userId);
         return dbStudentRequestsByProfession;
     }
-    
 
+
+    public int getRequestsCount()
+    {
+
+        DBServices dbs = new DBServices();
+        int numAffected = dbs.getRequestsCount("studentDBConnectionString");
+        return numAffected;
+
+    }
+
+    public int getAttendenceFormsCount()
+    {
+
+        DBServices dbs = new DBServices();
+        int numAffected = dbs.getAttendenceFormsCount("studentDBConnectionString");
+        return numAffected;
+
+    }
 
 }

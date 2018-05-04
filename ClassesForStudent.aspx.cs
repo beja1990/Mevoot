@@ -133,8 +133,8 @@ public partial class ClassesForStudent : System.Web.UI.Page
                         cancelParticipationBTN.OnClientClick = "javascript:return window.alert('בקשתך לביטול הרשמה לתגבור נשלחה')";
                         e.Row.Cells[0].Controls.Add(cancelParticipationBTN);
 
-                        Button requestBTN = (Button)e.Row.FindControl("requestButton");
-                        requestBTN.Visible = false; //לא ניתן לשלוח בקשה להרשמה לתגבור שכבר רשום אליו
+                        //Button requestBTN = (Button)e.Row.FindControl("requestButton");
+                        //requestBTN.Visible = false; //לא ניתן לשלוח בקשה להרשמה לתגבור שכבר רשום אליו
 
                     }
                     else // request denied

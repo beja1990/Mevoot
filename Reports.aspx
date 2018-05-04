@@ -15,6 +15,8 @@
             background-color: #9fccdf;
         }
 
+
+
         h3 {
             text-align: center;
             margin-top: 20px;
@@ -56,20 +58,16 @@
             if (DateFilter.startDate == "" && DateFilter.endDate == "") {
                 DateFilter.startDate = "1970-01-01";
                 DateFilter.endDate = "3000-01-01";
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות";
 
             }
             else if (DateFilter.startDate == "") {
                 DateFilter.startDate = "1970-01-01";
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות עד תאריך " + DateFilter.endDate;
             }
 
             else if (DateFilter.endDate == "") {
                 DateFilter.endDate = "3000-01-01";
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות החל מתאריך " + DateFilter.startDate;
             }
             else {
-                document.getElementById('title').innerHTML = "תגבורים לפי מקצועות בתאריכים " + DateFilter.endDate + " - " + DateFilter.startDate;
 
             }
 

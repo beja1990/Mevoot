@@ -74,7 +74,7 @@ public partial class AddStudent : System.Web.UI.Page
             int numEffected = stud.InsertStudent();
             Session["AddStudent"] = true;
             Response.Redirect("ShowStudents.aspx");
-    }
+        }
         catch (Exception ex)
         {
             Response.Write("There was an error when trying to Insert the student into the database" + ex.Message);

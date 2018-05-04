@@ -1945,7 +1945,7 @@ public class DBServices
         {
             con = connect(conString); // create a connection to the database using the connection String defined in the web config file
             String selectSTR = "select Pro_Id, Pro_Title, count(1) as 'amount' from Requests inner join Lesson on req_actLes_id = Les_Id inner join Profession on Pro_Id = Les_Pro_Id WHERE req_stu_id = '" + userId + "' AND req_status = '2' and request_date BETWEEN '" + startDate + "' AND '" + endDate + "' group by Pro_Id, Pro_Title ";
-                SqlCommand cmd = new SqlCommand(selectSTR, con);
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
 
             // get a reader
             SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -2023,6 +2023,63 @@ public class DBServices
         }
     }
 
+
+    //--------------------------------------------------------------------
+    // Requests counter for admin dashboard
+    //--------------------------------------------------------------------
+    public Int32 getRequestsCount(string conString)
+    {
+        SqlConnection con = connect(conString);
+        try
+        {
+            string myScalarQuery = "select count(1) as 'counter' from Requests where req_status='2'";
+
+            SqlCommand myCommand = new SqlCommand(myScalarQuery, con);
+            int counter = (int)myCommand.ExecuteScalar();
+            return counter;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
+
+
+    //--------------------------------------------------------------------
+    // Attendence forms counter for admin dashboard
+    //--------------------------------------------------------------------
+    public Int32 getAttendenceFormsCount(string conString)
+    {
+        SqlConnection con = connect(conString);
+        try
+        {
+            string myScalarQuery = "select count(1) as 'amount' from [dbo].[ActualLesson] where Attendance_Form='0'";
+
+            SqlCommand myCommand = new SqlCommand(myScalarQuery, con);
+            int counter = (int)myCommand.ExecuteScalar();
+            return counter;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
 
 
 }

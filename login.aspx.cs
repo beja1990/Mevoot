@@ -79,7 +79,7 @@ public partial class login : System.Web.UI.Page
                 Label errorMem = new Label();
                 errorMem.Text = "יכול להיכנס למערכת";
                 LabelPH.Controls.Add(errorMem);
-                Response.Redirect("admin_calendar.aspx");
+                Response.Redirect("admin_dashboard.aspx");
             }
         }
 

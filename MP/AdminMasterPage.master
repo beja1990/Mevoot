@@ -50,7 +50,7 @@
             Session["manUserSession"] = "";
         }
     </script>
-    
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
@@ -143,9 +143,10 @@
 
                                 </li>
                                 <li class="dropdown singleDrop color-6 ">
-                                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <a href="admin_dashboard.aspx"  role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-home bg-color-6" aria-hidden="true"></i>
-                                        <span>בית&nbsp&nbsp</span></a>
+                                        <span>בית</span>
+                                    </a>
                                 </li>
                                 <li>
                                     <a class="navbar-brand" href="admin_calendar.aspx">
