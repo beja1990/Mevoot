@@ -60,12 +60,12 @@
                         <asp:Button ID="DeclineButton" Text="דחה" runat="server" CssClass="btn btn-danger btn-sm" OnClick="DeclineButton_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="req_number" HeaderText="מספר בקשה" InsertVisible="False" ReadOnly="True" SortExpression="req_number" />
+                <asp:BoundField DataField="req_number" HeaderText="מזהה" InsertVisible="False" ReadOnly="True" SortExpression="req_number" />
                 <asp:BoundField DataField="pro_title" HeaderText="מקצוע" SortExpression="pro_title" />
                 <asp:BoundField DataField="stu_id" HeaderText="ת.ז התלמיד" SortExpression="stu_id" />
                 <asp:BoundField DataField="student_full_name" HeaderText="שם התלמיד" SortExpression="student_full_name" ReadOnly="True" />
-                <asp:BoundField DataField="teacher_full_name" HeaderText="שם המתגבר" SortExpression="teacher_full_name" ReadOnly="True" />
-                <asp:BoundField DataField="Les_maxQuan" HeaderText="כמות מקסימלית בתגבור" SortExpression="Les_maxQuan" />
+                <asp:BoundField DataField="teacher_full_name" HeaderText="המתגבר" SortExpression="teacher_full_name" ReadOnly="True" />
+                <asp:BoundField DataField="Les_maxQuan" HeaderText="קיבלות" SortExpression="Les_maxQuan" />
                 <asp:BoundField DataField="actLes_date" HeaderText="תאריך התגבור" SortExpression="actLes_date" />
                 <asp:BoundField DataField="Les_startHour" HeaderText="שעת התחלה" SortExpression="Les_startHour" />
                 <asp:BoundField DataField="Les_EndHour" HeaderText="שעת סיום" SortExpression="Les_EndHour" />

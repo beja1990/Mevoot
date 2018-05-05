@@ -14,31 +14,6 @@
             endDate: null
         };
 
-        function getDateforChart(value) {
-
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-            var startdateStr = yyyy + "-" + mm + "-" + dd;
-
-
-            switch (value) {
-                case 'day': alert(startdateStr);
-                    $('#startDate').val(startdateStr);
-                    $('#endDate').val(startdateStr);
-                    loadGraphs();
-                    break;
-                case 'week': alert('filter by week');
-                    $('#startDate').val(startdateStr);
-
-                    $('#endDate').val(enddateStr);
-                    break;
-                case 'month': alert('filter by month');
-                    $('#startDate').val(startdateStr);
-                    break;
-            }
-        }
 
 
         function loadSettings() {
@@ -53,37 +28,27 @@
             return false;
         };
 
-        $(function () {
-            $("#startDate").datepicker(
-                { dateFormat: 'yy-mm-dd' }
-                );
-        });
-        $(function () {
-            $("#endDate").datepicker(
-                { dateFormat: 'yy-mm-dd' }
-                );
-        });
 
+        $(function () {
+            $("#startDateTB").datepicker(
+                { dateFormat: 'yy-mm-dd' }
+                );
+        });
+        $(function () {
+            $("#endDateTB").datepicker(
+                { dateFormat: 'yy-mm-dd' }
+                );
+        });
 
 
         function loadGraphs() {
-            DateFilter.startDate = $('#startDate').val();
-            DateFilter.endDate = $('#endDate').val();
+            DateFilter.startDate = $('#startDateTB').val();
+            DateFilter.endDate = $('#endDateTB').val();
             if (DateFilter.startDate == "" && DateFilter.endDate == "") {
                 DateFilter.startDate = "1970-01-01";
                 DateFilter.endDate = "3000-01-01";
 
             }
-            //else if (DateFilter.startDate == "") {
-            //    DateFilter.startDate = "1970-01-01";
-            //}
-
-            //else if (DateFilter.endDate == "") {
-            //    DateFilter.endDate = "3000-01-01";
-            //}
-            //else {
-
-            //}
 
 
             var dataString = JSON.stringify(DateFilter);
@@ -119,7 +84,7 @@
                                 type: 'column'
                             },
                             title: {
-                                text: ' '
+                                text: ''
                             },
                             yAxis: {
                                 allowDecimals: false,
@@ -158,8 +123,11 @@
     </script>
 
     <style>
-        #filterLogo {
-            width: 20px;
+        .filterLogo {
+            width: 25px;
+            background-color: transparent;
+            position: relative;
+            top: 6px;
         }
 
         #filterRow {
@@ -180,11 +148,25 @@
             text-align: center;
             padding-top: 10px;
             padding-bottom: 10px;
-            background-color: #245581;
             color: white;
             font-size: 30px;
         }
 
+        #requestsKPI {
+            background-color: #b5d56a;
+        }
+
+        #attendenceKPI {
+            background-color: #f0c24b;
+        }
+
+        #KPI3 {
+            background-color: #245581;
+        }
+
+        #KPI4 {
+            background-color: #ea7066;
+        }
 
             #requestsKPI:hover, #attendenceKPI:hover, #KPI3:hover, #KPI4:hover {
                 background-color: #cac7ff;
@@ -198,12 +180,12 @@
 
         p {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             color: white;
         }
 
         .counter-text {
-            font-size: 26px;
+            font-size: 28px;
         }
 
         .kpi1-row, .upper_row {
@@ -220,18 +202,33 @@
         }
 
         #chart {
-            width: 80%;
-            height: 200px;
+            width: 90%;
+            height: 250px;
             margin: 0 auto;
             float: left;
         }
 
-        #endDate, #startDate {
+        #endDateTB, #startDateTB {
             display: none;
         }
 
+
         .hiddenLBL {
             visibility: hidden;
+        }
+
+        .TDL {
+            margin-right: 100px;
+        }
+
+        .filterBTN_leftSide {
+            text-align: center;
+        }
+
+        .filterHeader {
+            display: inline-block;
+            margin-bottom: 0px;
+            padding-right: 15px;
         }
     </style>
 </asp:Content>
@@ -248,19 +245,26 @@
 
         </div>
     </section>
-    <div class="container" style="margin: 0 auto; align-content: center; direction: rtl; padding-right: 50px;">
+    <div class="container center-block" style="margin: 0 auto; align-content: center; direction: rtl; padding-right: 50px;">
         <div class="row" id="filterRow">
-            <img id="filterLogo" src="images/filterLogo.png" />
-            <input type="button" id="filter_dayBTN" value="יום" class="btn btn-sm" onclick="getDateforChart('day')" />
-            <input type="button" id="filter_weekBTN" value="שבוע" class="btn btn-sm" onclick="getDateforChart('week')" />
-            <input type="button" id="filter_monthBTN" value="חודש" class="btn btn-sm" onclick="getDateforChart('month')" />
+            <div class="col-lg-8 filterBTN_leftSide">
+                <asp:Button ID="filter_dayBTN" runat="server" Text="יום" CssClass="btn btn-sm" OnClick="filter_dayBTN_Click" />
+                <asp:Button ID="filter_weekBTN" runat="server" Text="שבוע" CssClass="btn btn-sm" OnClick="filter_weekBTN_Click" />
+                <asp:Button ID="filter_monthBTN" runat="server" Text="חודש" CssClass="btn btn-sm" OnClick="filter_monthBTN_Click" />
+                <asp:ImageButton ID="filterBTN" CssClass="filterLogo" src="images/filterLogo.png" runat="server" OnClick="filter_clear_Click" ToolTip="נקה בחירה" />
+                <h4 id="chartTitle" class="filterHeader" runat="server"></h4>
 
-        </div>
-        <div class="row kpi1-row">
-            <div class="col-lg-8">
-                <div id="chart"></div>
             </div>
             <div class="col-lg-4">
+                <h3 class="TDL">דברים שצריך לעשות</h3>
+            </div>
+        </div>
+
+        <div class="row kpi1-row">
+            <div class="col-lg-8 center-block">
+                <div id="chart"></div>
+            </div>
+            <div class="col-lg-4" style="padding-right: 60px;">
                 <div class="upper_row">
                     <%--upper section--%>
                     <a href="ShowRequests.aspx">
@@ -275,36 +279,62 @@
                         <p><span id="attendenceCounter" class="counter-text">0</span></p>
                         <p>טפסי משוב</p>
                     </div>
+
                 </div>
 
                 <div class="lower_row">
                     <%--lower section--%>
-                    <div id="KPI3" class="btn">
+                    <div id="KPI4" class="btn">
+                        <p><span id="counter2" class="counter-text">0</span></p>
+                        <p>עוד משהו</p>
+                    </div>
+                    <div id="KPI3" class="btn margin-right">
                         <p><span id="counter1" class="counter-text">0</span></p>
                         <p>משהו</p>
                         <p>כלשהו</p>
                     </div>
-                    <div id="KPI4" class="btn margin-right">
-                        <p><span id="counter2" class="counter-text">0</span></p>
-                        <p>עוד משהו</p>
-                    </div>
+
                 </div>
             </div>
 
         </div>
         <div class="row">
-            <div class="col-lg-6">
-                left div 2
-            </div>
-            <div class="col-lg-6">
-            </div>
+            <div class="col-lg-8" style="direction: rtl;">
+                <h3 style="text-align: center;">תגבורים קרובים</h3>
+                <asp:SqlDataSource ID="upcomingLessonsDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand="select top(10) actLes_date,Pro_Title,(Tea_FirstName + ' ' +  Tea_LastName) as 'full name',Les_StartHour,Les_EndHour,Les_MaxQuan,quantity from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id where ActLes_date >= GETDATE()-1 order by ActLes_date"></asp:SqlDataSource>
+                <asp:GridView ID="upcomingLessonsGRDW" CssClass="grid" runat="server" AllowSorting="True" AutoGenerateColumns="False" ForeColor="#333333" CellPadding="4" Style="margin: 0 auto; margin-top: 20px; margin-bottom: 50px; text-align: center; width: 80%" DataSourceID="upcomingLessonsDS">
+                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                    <Columns>
+                        <asp:BoundField DataField="actLes_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="תאריך" SortExpression="actLes_date" />
+                        <asp:BoundField DataField="Pro_Title" HeaderText="מקצוע" SortExpression="Pro_Title" />
+                        <asp:BoundField DataField="full name" HeaderText="מתגבר" SortExpression="full name" />
+                        <asp:BoundField DataField="Les_StartHour" HeaderText="התחלה" SortExpression="Les_StartHour" />
+                        <asp:BoundField DataField="Les_EndHour" HeaderText="סיום" SortExpression="Les_EndHour" />
+                        <asp:BoundField DataField="Les_MaxQuan" HeaderText="קיבולת" SortExpression="Les_MaxQuan" />
+                        <asp:BoundField DataField="quantity" HeaderText="רשומים" SortExpression="quantity" />
+                    </Columns>
+                    <EditRowStyle BackColor="#999999" />
+                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#245581" Font-Bold="True" ForeColor="#F7F7F7" />
+                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                </asp:GridView>
 
+            </div>
+            <div class="col-lg-4" style="text-align: center;">
+                <h3>מקום לטבלת הודעות אחרונות</h3>
+            </div>
         </div>
 
     </div>
-    <input type="text" id="endDate" placeholder="בחר תאריך סיום" name="endDatename" />
+    <input type="text" id="endDateTB" placeholder="בחר תאריך סיום" name="endDatename" value="<%= this.inputEndValue %>" />
+    <input type="text" id="startDateTB" placeholder="בחר תאריך התחלה" name="startDatename" value="<%= this.inputStartValue %>" />
 
-    <input type="text" id="startDate" placeholder="בחר תאריך התחלה" name="startDatename" />
 
     <table id="ProfessionCountChart" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
         <thead>

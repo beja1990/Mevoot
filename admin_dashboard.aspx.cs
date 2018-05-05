@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 
 public partial class admin_dashboard : System.Web.UI.Page
 {
+    public string inputStartValue;
+    public string inputEndValue;
     protected void Page_Load(object sender, EventArgs e)
     {
         Report r = new Report();
@@ -28,5 +30,49 @@ public partial class admin_dashboard : System.Web.UI.Page
 
     }
 
+
+
+
+    protected void filter_dayBTN_Click(object sender, EventArgs e)
+    {
+        string startDate = DateTime.Now.ToString("yyyy-MM-dd");
+        inputStartValue = startDate;
+        inputEndValue = startDate;
+        chartTitle.InnerHtml = "סינון: יום";
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { loadGraphs(); });", true);
+
+    }
+
+    protected void filter_weekBTN_Click(object sender, EventArgs e)
+    {
+        DateTime date = DateTime.Now;
+        string startDate = DateTime.Now.ToString("yyyy-MM-dd");
+        string endDate = date.AddDays(7).ToString("yyyy-MM-dd");
+        inputStartValue = startDate;
+        inputEndValue = endDate;
+        chartTitle.InnerHtml = "סינון: שבוע";
+
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { loadGraphs(); });", true);
+    }
+
+    protected void filter_monthBTN_Click(object sender, EventArgs e)
+    {
+        DateTime date = DateTime.Now;
+        string startDate = DateTime.Now.ToString("yyyy-MM-dd");
+        string endDate = date.AddMonths(1).ToString("yyyy-MM-dd");
+        inputStartValue = startDate;
+        inputEndValue = endDate;
+        chartTitle.InnerHtml = "סינון: חודש";
+
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { loadGraphs(); });", true);
+    }
+
+    protected void filter_clear_Click(object sender, EventArgs e)
+    {    
+        inputStartValue = "";
+        inputEndValue = "";
+        chartTitle.InnerHtml = "";
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { loadGraphs(); });", true);
+    }
 
 }
