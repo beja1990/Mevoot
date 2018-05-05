@@ -54,11 +54,11 @@
                 DateFilter.endDate = "3000-01-01";
             }
             else if (DateFilter.startDate == "") {
-                DateFilter.startDate = "1970-01-01";              
+                DateFilter.startDate = "1970-01-01";
             }
 
             else if (DateFilter.endDate == "") {
-                DateFilter.endDate = "3000-01-01";        
+                DateFilter.endDate = "3000-01-01";
             }
 
 
@@ -259,12 +259,12 @@
             width: 100px;
         }
 
-        #report_PH{
-            margin-bottom:100px;
+        #report_PH {
+            margin-bottom: 100px;
         }
 
-        .filterDiv{
-            height:150px;
+        .filterDiv {
+            height: 150px;
         }
     </style>
 
@@ -331,9 +331,10 @@
                         <asp:TextBox ID="NoteTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="הערות"></asp:TextBox>
                     </div>
 
-                    <div class="form-group" style="text-align: center">
-                        <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary rightTB" data-target="#confirmationModal" />
-                        <button id="deletePopUp" class="btn btn-danger" style="float: left;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                    <div class="form-group" style="text-align: center;padding-left:170px;">
+                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+
+                        <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary " data-target="#confirmationModal" />
                     </div>
 
                 </div>
@@ -395,17 +396,17 @@
                 <div class="row filterDiv">
                     <input type="text" id="endDate" placeholder="בחר תאריך סיום" name="endDatename" title="במידה ולא נבחר תאריך, תאריך הסיום יהיה היום" />
                     <input type="text" id="startDate" placeholder="בחר תאריך התחלה" name="startDatename" />
-                    <input type="button" id="profession_reportBTN" value="סנן" class="btn btn-sm filterBTN" onclick="showReport()" style="float: right; margin:-5px;" />
+                    <input type="button" id="profession_reportBTN" value="סנן" class="btn btn-sm filterBTN" onclick="showReport()" style="float: right; margin: -5px;" />
                 </div>
                 <h3 id="title"></h3>
                 <div class="row">
-                    <div class="col-lg-6" id="chart" style="width: 50%;margin-top:20px;"></div>
+                    <div class="col-lg-6" id="chart" style="width: 50%; margin-top: 20px;"></div>
                     <br />
-                    <div class="col-lg-6" id="pie" style="width: 50%; "></div>
+                    <div class="col-lg-6" id="pie" style="width: 50%;"></div>
                 </div>
                 <%--  כמות בקשות לפי מקצוע לתלמיד --%>
 
-                <table id="requestsChartbyProfession" class="table table-bordered" style="display:none; margin: 0 auto; width: 200px; direction: rtl;">
+                <table id="requestsChartbyProfession" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
                     <thead>
                         <tr>
                             <th>מקצוע</th>
@@ -417,7 +418,7 @@
                 </table>
 
                 <%--   כמות תגבורים שהתלמיד נרשם אליהם ואושרו לפי מקצוע--%>
-                <table id="ClassesbyProfessionCountPie" class="table table-bordered" style="display:none; margin: 0 auto; width: 200px; direction: rtl;">
+                <table id="ClassesbyProfessionCountPie" class="table table-bordered" style="display: none; margin: 0 auto; width: 200px; direction: rtl;">
                     <thead>
                         <tr>
 

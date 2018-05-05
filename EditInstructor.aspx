@@ -108,9 +108,9 @@
                         <asp:TextBox ID="addressTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="כתובת"></asp:TextBox>
                     </div>
 
-                    <div class="form-group" style="text-align: center">
-                        <asp:Button ID="saveBTN" runat="server" Text="עדכון חונך" OnClick="saveBTN_Click" CssClass="btn btn-primary rightTB" data-target="#confirmationModal" />
-                        <button id="deletePopUp" class="btn btn-danger" style="float: left;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                    <div class="form-group" style="text-align: center; padding-left:170px;">
+                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                        <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary " data-target="#confirmationModal" />
                     </div>
 
                 </div>
@@ -144,7 +144,7 @@
         </div>
         <!-- Ends contact form 1 -->
     </div>
-   <%-- <div id="confirmationModal" class="modal fade modal-sm modaltb" role="dialog">
+    <%-- <div id="confirmationModal" class="modal fade modal-sm modaltb" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
