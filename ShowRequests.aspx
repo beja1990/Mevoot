@@ -62,15 +62,15 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="req_number" HeaderText="מזהה" InsertVisible="False" ReadOnly="True" SortExpression="req_number" />
                 <asp:BoundField DataField="pro_title" HeaderText="מקצוע" SortExpression="pro_title" />
-                <asp:BoundField DataField="stu_id" HeaderText="ת.ז התלמיד" SortExpression="stu_id" />
-                <asp:BoundField DataField="student_full_name" HeaderText="שם התלמיד" SortExpression="student_full_name" ReadOnly="True" />
-                <asp:BoundField DataField="teacher_full_name" HeaderText="המתגבר" SortExpression="teacher_full_name" ReadOnly="True" />
+                <asp:BoundField DataField="stu_id" HeaderText="ת.ז" SortExpression="stu_id" />
+                <asp:BoundField DataField="student_full_name" HeaderText="תלמיד" SortExpression="student_full_name" ReadOnly="True" />
+                <asp:BoundField DataField="teacher_full_name" HeaderText="מתגבר" SortExpression="teacher_full_name" ReadOnly="True" />
                 <asp:BoundField DataField="Les_maxQuan" HeaderText="קיבלות" SortExpression="Les_maxQuan" />
                 <asp:BoundField DataField="actLes_date" HeaderText="תאריך התגבור" SortExpression="actLes_date" />
-                <asp:BoundField DataField="Les_startHour" HeaderText="שעת התחלה" SortExpression="Les_startHour" />
-                <asp:BoundField DataField="Les_EndHour" HeaderText="שעת סיום" SortExpression="Les_EndHour" />
+                <asp:BoundField DataField="Les_startHour" HeaderText="התחלה" SortExpression="Les_startHour" />
+                <asp:BoundField DataField="Les_EndHour" HeaderText="סיום" SortExpression="Les_EndHour" />
                 <asp:BoundField DataField="Les_Day" HeaderText="יום בשבוע" SortExpression="Les_Day" />
-                <asp:BoundField DataField="quantity" HeaderText="כמות נוכחית" SortExpression="quantity" />
+                <asp:BoundField DataField="quantity" HeaderText="רשומים" SortExpression="quantity" />
                 <asp:BoundField DataField="req_is_permanent" HeaderText="האם קבוע" SortExpression="req_is_permanent" />
                 <asp:BoundField DataField="req_status" HeaderText="סטטוס הבקשה" SortExpression="req_status" />
                 <asp:BoundField DataField="ActLes_LesId" HeaderText="מספר התגבור" SortExpression="ActLes_LesId" />

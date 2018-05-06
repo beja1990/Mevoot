@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" />
     <script>
         function login() {
-            window.location = "admin_calendar.aspx";
+            window.location = "admin_dashboard.aspx";
         }
         function sendMail() {
             alert('נסה את מספר הטלפון שלך, ללא רווחים');

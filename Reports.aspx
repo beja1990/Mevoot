@@ -12,9 +12,17 @@
 
         .btn {
             margin: 10px;
-            background-color: #9fccdf;
+            background-color: #245581;
         }
 
+            .btn:hover {
+                color: white;
+                background-color: #84bed6 ;
+            }
+            .btn:focus{
+                background-color: #84bed6;
+                color:white;
+            }
 
 
         h3 {
@@ -26,8 +34,7 @@
             direction: rtl;
         }
 
-        #imagPrint{
-            float:left;
+        #imagPrint {
             vertical-align: middle;
         }
     </style>
@@ -247,7 +254,7 @@
 
         <div class="row">
 
-            <input type="image" id="imagPrint" src="images/printer-service.png" alt="Submit" width="30" height="30" onclick="printDiv('report_PH')" />
+            <input type="image" id="imagPrint" src="images/printer-service.png" alt="Print" width="30" height="30" onclick="printDiv('report_PH')" title="הדפסה" />
 
             <input type="button" id="display" value="הצג טבלת נתונים" class="btn btn-lg" onclick="showtable()" />
 

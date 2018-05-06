@@ -5,6 +5,10 @@
         .container.content {
             direction: rtl;
         }
+        .btn{
+            width:120px;
+            height:35px;
+        }
     </style>
 
 </asp:Content>
@@ -30,12 +34,12 @@
         <asp:SqlDataSource ID="classesDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand=" select ActLes_LesId, Les_Id,Pro_Title, ActLes_date,Les_StartHour,Les_EndHour,(Tea_FirstName + ' ' +  Tea_LastName) as 'full_name', Les_MaxQuan,quantity
 	from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id"></asp:SqlDataSource>
 
-        <asp:GridView ID="classesGV" runat="server" AutoGenerateColumns="False" DataSourceID="classesDS" Style="margin-left: auto; margin-right: auto; margin-bottom: 100px; text-align: center; width: 80%" AllowSorting="True" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnRowDataBound="classesGV_RowDataBound" EnableViewState="false">
+        <asp:GridView ID="classesGV" runat="server" AutoGenerateColumns="False" DataSourceID="classesDS" AllowPaging="True" PageSize="20" Style="margin-left: auto; margin-right: auto; margin-bottom: 100px; text-align: center; width: 80%" AllowSorting="True" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnRowDataBound="classesGV_RowDataBound" EnableViewState="false">
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Button ID="requestButton" Text="הגש בקשה" runat="server" CssClass="btn btn-success btn-sm" CommandName="request" OnClick="requestButton_Click" OnClientClick="javascript:return window.alert('בקשתך נשלחה')" />
+                        <asp:Button ID="requestButton" Text="" runat="server" CssClass="btn btn-success btn-sm" CommandName="request"  />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <%--                <asp:BoundField DataField="req_status" HeaderText="סטטוס בקשה" InsertVisible="False" ReadOnly="True" SortExpression="req_status" />--%>

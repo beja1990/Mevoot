@@ -185,13 +185,44 @@
             text-align: center;
         }
 
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            display: block;
+            opacity: 0.7;
+            z-index: 99;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            z-index: 100;
+        }
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+
+    <div id="loading">
+        <img id="loading-image" src="images/loading2.gif" alt="Loading..." />
+    </div>
+
+
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="admin_dashboard.aspx">בית</a></li>
+            <li class="active">מערכת שעות</li>
+
+        </ol>
         <div>
-            <div class="sectionTitle text-center">
+            <div id="pageTitle" class="sectionTitle text-center" style="display: none;">
+
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
                     <span>מערכת שעות</span>
@@ -275,5 +306,12 @@
         </div>
 
     </div>
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#loading').hide();
+            $('#pageTitle').show();
+        });
+    </script>
 </asp:Content>
 

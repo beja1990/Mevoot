@@ -196,11 +196,12 @@
             color: white;
         }
 
-        #filter_dayBTN:focus, #filter_weekBTN:focus, #filter_monthBTN:focus {
-            color: black;
-            background-color: #fffb9c;
+        #filter_dayBTN:hover, #filter_weekBTN:hover, #filter_monthBTN:hover {
+            color:white;
+            background-color: #84bed6 ;
         }
 
+         
         #chart {
             width: 90%;
             height: 250px;
@@ -235,6 +236,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <section class="mainContent full-width clearfix featureSection">
         <div class="container">
+          
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>

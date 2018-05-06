@@ -41,8 +41,10 @@ public partial class login : System.Web.UI.Page
         Student getStuObj = stu.readSpecificUserStudent(Convert.ToDouble(username_id), password);
 
         Manager mngr = new Manager();// אם זה מנהל
-
         Manager getManObj = mngr.readSpecificUserManager(Convert.ToDouble(username_id), password);
+
+        Teacher tea = new Teacher();// אם זה מתגבר
+        Teacher getTeaObj = tea.readSpecificUserTeacher(Convert.ToDouble(username_id), password);
 
         if (getStuObj != null) //לכניסה של תלמיד
         {
@@ -82,7 +84,24 @@ public partial class login : System.Web.UI.Page
                 Response.Redirect("admin_dashboard.aspx");
             }
         }
+        else if (getTeaObj != null) //לכניסה של מתגבר
+        {
 
+            if (getTeaObj.Tea_status == false)// אם הוא משתמש לא פעיל
+            {
+                Label errorMem = new Label();
+                errorMem.Text = "הסטטוס של משתמש:  " + getTeaObj.Tea_firstName + " " + getTeaObj.Tea_lastName + " אינו פעיל ולכן לא יכול להיכנס למערכת";
+                LabelPH.Controls.Add(errorMem);
+            }
+            else
+            {
+                Session["teaUserSession"] = getTeaObj;
+                Label errorMem = new Label();
+                errorMem.Text = "יכול להיכנס למערכת";
+                LabelPH.Controls.Add(errorMem);
+                Response.Redirect("ClassesForTeacher.aspx");
+            }
+        }
         else //אם הוא לא רשום
         {
             Label errorMem = new Label();

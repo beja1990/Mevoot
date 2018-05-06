@@ -181,4 +181,15 @@ public class Teacher
         return numAffected;
 
     }
+
+    public Teacher readSpecificUserTeacher(double username_id, string password)
+    {
+        DBServices dbs = new DBServices();
+        Teacher DBuser = dbs.readSpecificUserTeacherDB(username_id, password, "studentDBConnectionString", "Teacher");
+
+        if (DBuser == null)
+            return null;
+        else
+            return DBuser;
+    }
 }

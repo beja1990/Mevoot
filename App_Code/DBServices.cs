@@ -864,6 +864,58 @@ public class DBServices
 
     }
 
+
+    //read users from teacher table
+    public Teacher readSpecificUserTeacherDB(double userId, string userPass, string conString, string tableName)
+    {
+        Teacher t = new Teacher();
+        SqlConnection con = null;
+        try
+        {
+            con = connect(conString); // create a connection to the database using the connection String defined in the web config file
+
+            String selectSTR = "SELECT * FROM " + tableName + " where tea_Id='" + userId + "' and Tea_Password='" + userPass + "'";
+            SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+            // get a reader
+            SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+            int flg = 1;
+
+            while (dr.Read())
+            {   // Read till the end of the data into a row
+                t.Tea_id = (double)dr["tea_Id"];
+                t.Tea_firstName = (string)dr["tea_FirstName"];
+                t.Tea_lastName = (string)dr["tea_LastName"];
+                t.Tea_phoneNumber = (string)dr["tea_PhoneNumber"];
+                t.Tea_email = (string)dr["tea_Email"];
+                t.Tea_address = (string)dr["tea_Address"];
+                t.Tea_status = (bool)dr["tea_Status"];
+                t.Tea_password = (string)dr["tea_Password"];
+
+                flg = 0; // only one row
+            }
+
+            if (flg == 0)
+            {
+                return t;
+            }
+            else return null;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
+
+
     //Insert TeachBy to the db
     public int InsertTeachBy(TeachBy tb)
     {
