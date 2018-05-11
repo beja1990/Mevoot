@@ -34,10 +34,11 @@ public partial class ShowActualLesson_admin : System.Web.UI.Page
                         SqlDataAdapter adpt = new SqlDataAdapter(cmd);
                         adpt.Fill(dt);
                         Dictionary<int, string> lst = new Dictionary<int, string>();
-                        
+
+             
                         foreach (DataRow row in dt.Rows)
                         {
-                            
+
                             switch (row[6].ToString())
                             {
                                 case "1":
@@ -65,29 +66,48 @@ public partial class ShowActualLesson_admin : System.Web.UI.Page
                         TigburDDL.DataTextField = "Value";
                         TigburDDL.DataValueField = "key";
                         TigburDDL.DataBind();
+                        TigburDDL.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                        TigburDDL.SelectedIndex = 0;
                     }
                 }
 
             }
 
         }
+
+        bool AddActualLesson = Convert.ToBoolean(Session["AddActualLesson"]);
+        if (AddActualLesson)
+        {
+            int lessonCounter = Convert.ToInt32(Session["LessonCounterSession"]);
+            if (lessonCounter == 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "toastr_message", "toastr.success('נוסף תגבור אחד למערכת')", true);
+            }
+            else if (lessonCounter > 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "toastr_message", "toastr.success('נוספו " + lessonCounter + " תגבורים למערכת')", true);
+
+            }
+        else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "toastr_message", "toastr.warning('בחר מספר תגבורים להוספה')", true);
+            }
+
+            Session["AddActualLesson"] = false;
+        }
+
     }
 
     Lesson les = new Lesson();
 
-    //TBD on phase 2
-    protected void lessonsGRDW_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        //int act_les_id = Convert.ToInt32(lessonsGRDW.SelectedRow.Cells[1].Text);
-        //int numEffected1 = les.deleteLessonFromRequest(act_les_id);
-        //int numEffected2 = les.deleteLesson(act_les_id);
-        //Response.Redirect("ShowLessons.aspx");
-    }
+
 
 
 
     protected void generateDate_Click(object sender, EventArgs e)
     {
+        Session["AddActualLesson"] = true;
+
         string dt = Request.Form["DatePickername"];
         int les_id = (int)(Session["LES_ID"]);
         int quantity = 0;
@@ -103,11 +123,13 @@ public partial class ShowActualLesson_admin : System.Web.UI.Page
 
 
         }
+        string lessonCounter = counterTB.Text;
+        Session["LessonCounterSession"] = lessonCounter;
         Response.Redirect("ShowActualLesson_admin.aspx");
     }
 
     protected void TigburDDL_SelectedIndexChanged(object sender, EventArgs e)
     {
-       Session["LES_ID"] =Convert.ToInt32(TigburDDL.SelectedValue);
+        Session["LES_ID"] = Convert.ToInt32(TigburDDL.SelectedValue);
     }
 }

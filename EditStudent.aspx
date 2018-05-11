@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="plugins/jquery-ui/jquery-ui.js"></script>
     <link href="assets/plugins/toastr/toastr.css" rel="stylesheet" />
     <script src="assets/plugins/toastr/toastr.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -331,8 +332,8 @@
                         <asp:TextBox ID="NoteTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="הערות"></asp:TextBox>
                     </div>
 
-                    <div class="form-group" style="text-align: center;padding-left:170px;">
-                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                    <div class="form-group" style="text-align: center; padding-left: 170px;">
+                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block; margin-right: 20px;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal"><span class="glyphicon glyphicon-trash"></span></button>
 
                         <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary " data-target="#confirmationModal" />
                     </div>

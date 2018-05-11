@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MP/AdminMasterPage.master" AutoEventWireup="true" CodeFile="ShowActualLesson_admin.aspx.cs" Inherits="ShowActualLesson_admin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="assets/plugins/toastr/toastr.css" rel="stylesheet" />
+    <script src="assets/plugins/toastr/toastr.js"></script>
+
     <script>
+
         $(function () {
             $("#datepicker").datepicker(
                 { dateFormat: 'yy-mm-dd' }
@@ -9,26 +13,62 @@
 
         });
 
+        $(function () {
+
+            // Initialize and change language to hebrew
+            $('#datepicker').datepicker($.datepicker.regional["he"]);
+
+        });
+    </script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+
+        }
+    </script>
+
+    <script src="plugins/select2/select2.min.js"></script>
+    <link href="css/select2.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#<%=TigburDDL.ClientID%>").select2({
+                placeholder: "בחר תבנית תגבור",
+                allowClear: true,
+                dir: "rtl"
+            });
+
+        });
 
     </script>
 
-    <style>
-        #addStudentBTN {
-            text-align: right;
-            float: right;
-        }
 
+    <style>
         .container.content {
             direction: rtl;
         }
 
-        .filterTB {
-            margin-right: 20px;
-            width: 200px;
-        }
 
-        .slight_left{
-            margin-left:20px;
+        .boxes {
+            position: relative;
+            top: 2px;
+            margin-left: 20px;
         }
     </style>
 </asp:Content>
@@ -56,22 +96,20 @@
         <div>
             <asp:SqlDataSource ID="lessonsDS" runat="server"
                 ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>"
-                SelectCommand="	select Les_Id,Pro_Title, ActLes_date,Les_StartHour,Les_EndHour,(Tea_FirstName + ' ' +  Tea_LastName) as 'full name', Les_MaxQuan,quantity
-	from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id"></asp:SqlDataSource>
+                SelectCommand="	select Les_Id,Pro_Title, ActLes_date,Les_StartHour,Les_EndHour,(Tea_FirstName + ' ' +  Tea_LastName) as 'full name', Les_MaxQuan,quantity from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id  where ActLes_date >= GETDATE()-1  AND actls_cancelled=0 order by ActLes_date"></asp:SqlDataSource>
 
         </div>
         <div>
-            <asp:DropDownList ID="TigburDDL" runat="server" CssClass="form-control border-color-4 slight_left" placeholder="בחר תגבור" Style="width: 450px; margin-bottom:10px; float:right;" OnSelectedIndexChanged="TigburDDL_SelectedIndexChanged">
+            <asp:DropDownList ID="TigburDDL" runat="server" CssClass="form-control border-color-4" Style="width: 450px; margin-bottom: 10px; float: right;" OnSelectedIndexChanged="TigburDDL_SelectedIndexChanged">
             </asp:DropDownList>
-            <input type="text" id="datepicker" class="slight_left" placeholder="בחר תאריך התחלה" name="DatePickername" />
-            <asp:TextBox ID="counterTB" runat="server" CssClass="slight_left" placeholder="הזן כמות מופעים"></asp:TextBox>        
+            <input type="text" id="datepicker" class="boxes" style="margin-right:20px;" placeholder="בחר תאריך התחלה" name="DatePickername" />
+            <asp:TextBox ID="counterTB" runat="server" CssClass=" boxes" placeholder="הזן כמות מופעים"></asp:TextBox>
             <asp:Button ID="generateDate" runat="server" Text="הוסף למערכת" OnClick="generateDate_Click" CssClass="btn btn-primary rightTB btn-sm slight_left" />
         </div>
         <div>
-            <asp:GridView ID="lessonsGRDW" CssClass="grid" runat="server" Style="margin: 0 auto; margin-top: 20px; margin-bottom: 100px; text-align: center; width: 100%" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="lessonsDS" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="lessonsGRDW_SelectedIndexChanged">
+            <asp:GridView ID="lessonsGRDW" CssClass="grid" runat="server" Style="margin: 0 auto; margin-top: 20px; margin-bottom: 100px; text-align: center; width: 100%" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="lessonsDS" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
-                    <%--<asp:CommandField ShowSelectButton="True" SelectText="מחק תגבור" />--%>
                     <asp:BoundField DataField="Les_Id" HeaderText="מזהה תבנית" InsertVisible="False" SortExpression="Les_Id" />
                     <asp:BoundField DataField="Pro_Title" HeaderText="מקצוע" SortExpression="Pro_Title" />
                     <asp:BoundField DataField="ActLes_date" HeaderText="תאריך" SortExpression="ActLes_date" DataFormatString="{0:dd/MM/yyyy}" />

@@ -45,7 +45,7 @@
         </asp:DropDownList>
         <asp:SqlDataSource ID="stuReqDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand="select DISTINCT Requests.req_number, pro_title,
             (tea_firstName + ' '+ tea_lastName) as 'teacher_full_name',actLes_date, Les_startHour, Les_EndHour, Les_Day,req_is_permanent, req_status  
-            from ((((requests inner join student on req_stu_id= stu_id) inner join lesson on req_actLes_id= les_id ) inner join Teacher on Les_tea_Id= tea_Id) inner join Profession on les_pro_id= pro_id) inner join ActualLesson on ActLes_LesId= req_actLes_id where actLes_date = req_actLes_date and stu_id=@current_stu_id"
+            from ((((requests inner join student on req_stu_id= stu_id) inner join lesson on req_actLes_id= les_id ) inner join Teacher on Les_tea_Id= tea_Id) inner join Profession on les_pro_id= pro_id) inner join ActualLesson on ActLes_LesId= req_actLes_id where actLes_date = req_actLes_date and stu_id=@current_stu_id AND actls_cancelled=0"
             FilterExpression="(req_status)= '{0}'">
             <FilterParameters>
                 <asp:ControlParameter ControlID="statusDDL" PropertyName="SelectedValue" />

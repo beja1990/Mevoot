@@ -9,7 +9,12 @@ public partial class ShowRequests : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            string id = Request.QueryString["id"];
+            if (id == "1")
+                statusDDL.SelectedValue = "2";
+        }
         //if (Session["manUserSession"] == null)
         //{
         //    Response.Redirect("login.aspx");

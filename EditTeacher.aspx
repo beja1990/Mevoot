@@ -146,7 +146,7 @@
                         <asp:TextBox ID="mailTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="אימייל"></asp:TextBox>
                     </div>
                     <div class="form-group" style="text-align: center">
-                        <button id="deleteBTN" class="btn btn-danger" style="" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;margin-right:20px;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal"><span class="glyphicon glyphicon-trash"></span></button>
 
                         <asp:Button ID="saveBTN" runat="server" Text="עדכון מתגבר" OnClick="saveBTN_Click" CssClass="btn btn-primary" data-target="#confirmationModal" />
                     </div>

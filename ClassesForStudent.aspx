@@ -5,9 +5,10 @@
         .container.content {
             direction: rtl;
         }
-        .btn{
-            width:120px;
-            height:35px;
+
+        .btn {
+            width: 90px;
+            height: 35px;
         }
     </style>
 
@@ -27,19 +28,22 @@
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
+            <div dir="rtl" style="margin: 0 130px 20px 0">
+                <asp:Label ID="Label1" Style="color: red; font-weight: bold" runat="server" Text="אינך זכאי להירשם לתגבורים. אנא פנה למנהלת המרכז" Visible="false"></asp:Label>
+            </div>
         </div>
     </section>
     <div class="container content">
 
         <asp:SqlDataSource ID="classesDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand=" select ActLes_LesId, Les_Id,Pro_Title, ActLes_date,Les_StartHour,Les_EndHour,(Tea_FirstName + ' ' +  Tea_LastName) as 'full_name', Les_MaxQuan,quantity
-	from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id"></asp:SqlDataSource>
+	from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id where actls_cancelled=0"></asp:SqlDataSource>
 
-        <asp:GridView ID="classesGV" runat="server" AutoGenerateColumns="False" DataSourceID="classesDS" AllowPaging="True" PageSize="20" Style="margin-left: auto; margin-right: auto; margin-bottom: 100px; text-align: center; width: 80%" AllowSorting="True" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnRowDataBound="classesGV_RowDataBound" EnableViewState="false">
+        <asp:GridView ID="classesGV" runat="server" AutoGenerateColumns="False" DataSourceID="classesDS" Style="margin-left: auto; margin-right: auto; margin-bottom: 100px; text-align: center; width: 80%" AllowSorting="True" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnRowDataBound="classesGV_RowDataBound" EnableViewState="false">
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Button ID="requestButton" Text="" runat="server" CssClass="btn btn-success btn-sm" CommandName="request"  />
+                        <asp:Button ID="requestButton" Text="" runat="server" CssClass="btn btn-success btn-sm" CommandName="request" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <%--                <asp:BoundField DataField="req_status" HeaderText="סטטוס בקשה" InsertVisible="False" ReadOnly="True" SortExpression="req_status" />--%>

@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="form-group" style="text-align: center; padding-left:170px;">
-                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal">מחיקה</button>
+                        <button id="deletePopUp" class="btn btn-danger" style="display: inline-block;margin-right:20px;" type="button" data-toggle="modal" data-target="#deleteConfirmationModal"><span class="glyphicon glyphicon-trash"></span></button>
                         <asp:Button ID="saveBTN" runat="server" Text="עדכון תלמיד" OnClick="saveBTN_Click" CssClass="btn btn-primary " data-target="#confirmationModal" />
                     </div>
 

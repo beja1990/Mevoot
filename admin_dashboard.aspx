@@ -132,7 +132,7 @@
 
         #filterRow {
             margin: 0 auto;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         input {
@@ -197,14 +197,14 @@
         }
 
         #filter_dayBTN:hover, #filter_weekBTN:hover, #filter_monthBTN:hover {
-            color:white;
-            background-color: #84bed6 ;
+            color: white;
+            background-color: #84bed6;
         }
 
-         
+
         #chart {
             width: 90%;
-            height: 250px;
+            height: 300px;
             margin: 0 auto;
             float: left;
         }
@@ -231,16 +231,25 @@
             margin-bottom: 0px;
             padding-right: 15px;
         }
+
+        .KPI_box {
+            border: solid 3px black;
+            border-radius: 10px;
+            height: 300px;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <section class="mainContent full-width clearfix featureSection">
-        <div class="container">
-          
+        <div class="container" style="margin-bottom: 20px;">
+
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
-                    <span>דף הבית</span>
+                    <span>מסך מנהל</span>
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
@@ -267,35 +276,39 @@
                 <div id="chart"></div>
             </div>
             <div class="col-lg-4" style="padding-right: 60px;">
-                <div class="upper_row">
-                    <%--upper section--%>
-                    <a href="ShowRequests.aspx">
-                        <div id="requestsKPI" class="btn">
-                            <p><span id="requestsCounter" class="counter-text">0</span></p>
-                            <p>בקשות</p>
+                <div class="KPI_box form-control border-color-4 tb">
+                    <div class="upper_row">
+                        <%--upper section--%>
+
+                        <a href="ShowRequests.aspx?id=1">
+                            <div id="requestsKPI" class="btn">
+                                <p><span id="requestsCounter" class="counter-text">0</span></p>
+                                <p>בקשות</p>
+                                <p>ממתינות</p>
+                            </div>
+                        </a>
+
+                        <div id="attendenceKPI" class="btn margin-right">
+                            <p><span id="attendenceCounter" class="counter-text">0</span></p>
+                            <p>טפסי משוב</p>
+                        </div>
+                    </div>
+
+
+                    <div class="lower_row">
+                        <%--lower section--%>
+                        <div id="KPI4" class="btn">
+                            <p><span id="counter2" class="counter-text">0</span></p>
+                            <p>הודעות</p>
                             <p>ממתינות</p>
                         </div>
-                    </a>
+                        <div id="KPI3" class="btn margin-right">
+                            <p><span id="counter1" class="counter-text">0</span></p>
+                            <p>משהו</p>
+                            <p>כלשהו</p>
+                        </div>
 
-                    <div id="attendenceKPI" class="btn margin-right">
-                        <p><span id="attendenceCounter" class="counter-text">0</span></p>
-                        <p>טפסי משוב</p>
                     </div>
-
-                </div>
-
-                <div class="lower_row">
-                    <%--lower section--%>
-                    <div id="KPI4" class="btn">
-                        <p><span id="counter2" class="counter-text">0</span></p>
-                        <p>עוד משהו</p>
-                    </div>
-                    <div id="KPI3" class="btn margin-right">
-                        <p><span id="counter1" class="counter-text">0</span></p>
-                        <p>משהו</p>
-                        <p>כלשהו</p>
-                    </div>
-
                 </div>
             </div>
 
@@ -303,7 +316,7 @@
         <div class="row">
             <div class="col-lg-8" style="direction: rtl;">
                 <h3 style="text-align: center;">תגבורים קרובים</h3>
-                <asp:SqlDataSource ID="upcomingLessonsDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand="select top(10) actLes_date,Pro_Title,(Tea_FirstName + ' ' +  Tea_LastName) as 'full name',Les_StartHour,Les_EndHour,Les_MaxQuan,quantity from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id where ActLes_date >= GETDATE()-1 order by ActLes_date"></asp:SqlDataSource>
+                <asp:SqlDataSource ID="upcomingLessonsDS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand="select top(10) actLes_date,Pro_Title,(Tea_FirstName + ' ' +  Tea_LastName) as 'full name',Les_StartHour,Les_EndHour,Les_MaxQuan,quantity from Lesson inner join ActualLesson on Les_Id = ActLes_LesId inner join Teacher on Les_Tea_Id= Tea_Id inner join Profession on Les_Pro_Id=Pro_Id where ActLes_date >= GETDATE()-1  AND actls_cancelled=0 order by ActLes_date"></asp:SqlDataSource>
                 <asp:GridView ID="upcomingLessonsGRDW" CssClass="grid" runat="server" AllowSorting="True" AutoGenerateColumns="False" ForeColor="#333333" CellPadding="4" Style="margin: 0 auto; margin-top: 20px; margin-bottom: 50px; text-align: center; width: 80%" DataSourceID="upcomingLessonsDS">
                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                     <Columns>

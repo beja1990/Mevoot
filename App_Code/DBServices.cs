@@ -2134,4 +2134,44 @@ public class DBServices
     }
 
 
+    //Read student list from DB for specific lesson (Used by teacher user)
+    public DBServices readStudentsListDB(string conString, string tableName, int lessId, DateTime lessDate)
+    {
+
+        DBServices dbS = new DBServices(); // create a helper class
+        SqlConnection con = null;
+
+        try
+        {
+            con = dbS.connect(conString); // open the connection to the database
+
+            String selectStr = "SELECT StLes_stuId FROM " + tableName + " WHERE StLes_ActLesId = '" + lessId + "' and StLes_ActLesDate='" + lessDate.ToString("yyyy-MM-dd") + "'";
+            SqlDataAdapter da = new SqlDataAdapter(selectStr, con); // create the data adapter
+
+            DataSet ds = new DataSet(); // create a DataSet and give it a name (not mandatory) as defualt it will be the same name as the DB
+            da.Fill(ds);  // Fill the datatable (in the dataset), using the Select command
+
+            DataTable dt = ds.Tables[0];
+
+            // add the datatable and the data adapter to the dbS helper class in order to be able to save it to a Session Object
+            dbS.dt = dt;
+            dbS.da = da;
+
+            return dbS;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw ex;
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+
+
+        }
+    }
 }

@@ -10,9 +10,15 @@
     <title>מרכז למידה - מבואות ים</title>
 
     <!-- PLUGINS CSS STYLE -->
-    <link href="../plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Language script -->
+<%--    <script src="../plugins/jquery-ui/datepicker-he.js"></script>--%>
+
 
     <!-- GOOGLE FONT -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css' />
@@ -43,6 +49,8 @@
     <script src="../plugins/jquery/jquery-min.js"></script>
     <script src="../plugins/jquery-ui/jquery-ui.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
 
     <script>
         function logout() {
@@ -143,7 +151,7 @@
 
                                 </li>
                                 <li class="dropdown singleDrop color-6 ">
-                                    <a href="admin_dashboard.aspx"  role="button" aria-haspopup="true" aria-expanded="false">
+                                    <a href="admin_dashboard.aspx" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-home bg-color-6" aria-hidden="true"></i>
                                         <span>בית</span>
                                     </a>
@@ -213,7 +221,7 @@
     </div>
 
 
-    <script src="../plugins/jquery-ui/jquery-ui.js"></script>
+    <%--    <script src="../plugins/jquery-ui/jquery-ui.js"></script>--%>
     <script src="../plugins/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
     <script src="../plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     <script src="../plugins/selectbox/jquery.selectbox-0.1.3.min.js"></script>

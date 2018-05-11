@@ -45,7 +45,7 @@
             <div class="sectionTitle text-center">
                 <h2>
                     <span class="shape shape-left bg-color-4"></span>
-                    <span>הוספת תבנית חדשה</span>
+                    <span>הוספת תבנית תגבור</span>
                     <span class="shape shape-right bg-color-4"></span>
                 </h2>
             </div>
@@ -79,7 +79,7 @@
                         <asp:TextBox ID="endTimeTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="שעת סיום"></asp:TextBox>
                     </div>
                      <div class="form-group" style="text-align: center">
-                            <asp:Button ID="add" runat="server" Text="הוסף תגבור למערכת" OnClick="submitBTN_Click" CssClass="btn btn-primary rightTB" data-target="#confirmationModal" />
+                            <asp:Button ID="add" runat="server" Text="הוסף תבנית תגבור" OnClick="submitBTN_Click" CssClass="btn btn-primary rightTB" data-target="#confirmationModal" />
                         </div>
                 </div>
             </div>

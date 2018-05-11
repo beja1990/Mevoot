@@ -106,6 +106,7 @@
                     <div class="form-group">
                         <i class="fa fa-comments" aria-hidden="true"></i>
                         <asp:TextBox ID="NoteTB" runat="server" CssClass="form-control border-color-4 tb" placeholder="הערות"></asp:TextBox>
+
                     </div>
 
                     <div class="form-group" style="text-align: center">

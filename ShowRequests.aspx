@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MP/AdminMasterPage.master" AutoEventWireup="true" CodeFile="ShowRequests.aspx.cs" Inherits="ShowRequests" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script>
+
+    </script>
     <style>
         .container.content {
             direction: rtl;
@@ -44,7 +47,7 @@
 
         <asp:SqlDataSource ID="waitingReqDSS" runat="server" ConnectionString="<%$ ConnectionStrings:studentDBConnectionString %>" SelectCommand=" select DISTINCT Requests.req_number, number ,req_type, pro_title, stu_id,(stu_firstName + ' ' + stu_lastName) as 'student_full_name',
             (tea_firstName + ' '+ tea_lastName) as'teacher_full_name', Les_maxQuan,actLes_date, Les_startHour, Les_EndHour, Les_Day , quantity,req_is_permanent, req_status, ActLes_LesId 
-            from ((((requests inner join student on req_stu_id= stu_id) inner join lesson on req_actLes_id= les_id ) inner join Teacher on Les_tea_Id= tea_Id) inner join Profession on les_pro_id= pro_id) inner join ActualLesson on ActLes_LesId= req_actLes_id where actLes_date = req_actLes_date"
+            from ((((requests inner join student on req_stu_id= stu_id) inner join lesson on req_actLes_id= les_id ) inner join Teacher on Les_tea_Id= tea_Id) inner join Profession on les_pro_id= pro_id) inner join ActualLesson on ActLes_LesId= req_actLes_id where actLes_date = req_actLes_date AND actls_cancelled=0"
             FilterExpression="(req_status)= '{0}'">
             <FilterParameters>
                 <asp:ControlParameter ControlID="statusDDL" PropertyName="SelectedValue" />

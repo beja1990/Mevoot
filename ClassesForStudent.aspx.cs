@@ -25,7 +25,6 @@ public partial class ClassesForStudent : System.Web.UI.Page
         }
 
         Student s = (Student)(Session["userStudent"]);
-        double reqStuId = s.Stu_id;
 
 
         DataTable dt = this.GetRequests();
@@ -39,16 +38,44 @@ public partial class ClassesForStudent : System.Web.UI.Page
         {
             int index = e.Row.Cells[3].Text.IndexOf(" ");
             e.Row.Cells[3].Text = e.Row.Cells[3].Text.Substring(0, index);
+            string iDate = e.Row.Cells[3].Text;
+            DateTime oDate = Convert.ToDateTime(iDate);
+            DateTime currentDate = DateTime.Now.Date;
+
+        }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string iDate = e.Row.Cells[3].Text;
+            DateTime oDate = Convert.ToDateTime(iDate);
+            DateTime currentDate = DateTime.Now.Date;
+            if (oDate < currentDate)
+            {
+                e.Row.Visible = false;
+            }
         }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             if (Convert.ToInt32(e.Row.Cells[8].Text) < (Convert.ToInt32(e.Row.Cells[7].Text))) //במידה והסטודנט לא רשום לתגבור ויש עדיין מקום בתגבור, כלומר אם הכמות המקסימלית קטנה מהכמות הפועל, ניתן להירשם לתגבור ולכן נציג את כפתור "הגש בקשה"
             {
-                Button BTN = e.Row.FindControl("requestButton") as Button;
-                BTN.Text = "הגש בקשה";
-                BTN.Click += requestButton_Click;
-                BTN.OnClientClick = "javascript:return window.alert('בקשתך נשלחה')";
+                Student s = (Student)(Session["userStudent"]);
+                if (s.IsEntitled == true)
+                {
+                    Button BTN = e.Row.FindControl("requestButton") as Button;
+                    BTN.Text = "הגש בקשה";
+                    BTN.Enabled = true;
+                    BTN.Click += requestButton_Click;
+                    BTN.OnClientClick = "javascript:return window.alert('בקשתך נשלחה')";
+                }
+                else
+                {
+                    Button BTN = e.Row.FindControl("requestButton") as Button;
+                    BTN.Text = "הגש בקשה";
+                    BTN.Enabled = false;
+                    BTN.ToolTip = "אינך זכאי להירשם לתגבורים";
+
+                }
+
             }
             else
             {
@@ -80,6 +107,7 @@ public partial class ClassesForStudent : System.Web.UI.Page
                     {
                         Button BTN = e.Row.FindControl("requestButton") as Button;
                         BTN.Text = "בטל בקשה";
+                        BTN.Enabled = true;
                         //BTN.BackColor = System.Drawing.Color.Red;
                         BTN.CssClass = "btn btn-danger btn-sm";
                         BTN.Click += cancelBTN_click;
@@ -89,6 +117,7 @@ public partial class ClassesForStudent : System.Web.UI.Page
                     {
                         Button BTN = e.Row.FindControl("requestButton") as Button;
                         BTN.Text = "בטל השתתפות";
+                        BTN.Enabled = true;
                         //BTN.BackColor = System.Drawing.Color.DarkBlue;
                         BTN.CssClass = "btn btn-primary btn-sm";
                         BTN.Click += cancelParticipationButton_Click;
@@ -111,11 +140,25 @@ public partial class ClassesForStudent : System.Web.UI.Page
                     }
                     else if (req_type == 1 && req_status == 1)
                     {
-                        Button BTN = e.Row.FindControl("requestButton") as Button;
-                        BTN.Text = "הגש בקשה";
-                        BTN.CssClass = "btn btn-success btn-sm";
-                        BTN.Click += requestButton_Click;
-                        BTN.OnClientClick = "javascript:return window.alert('בקשתך נשלחה')";
+
+                        Student stu = (Student)(Session["userStudent"]);
+                        if (stu.IsEntitled == true)
+                        {
+                            Button BTN = e.Row.FindControl("requestButton") as Button;
+                            BTN.Text = "הגש בקשה";
+                            BTN.CssClass = "btn btn-success btn-sm";
+                            BTN.Click += requestButton_Click;
+                            BTN.Enabled = true;
+                            BTN.OnClientClick = "javascript:return window.alert('בקשתך נשלחה')";
+                        }
+                        else
+                        {
+                            Button BTN = e.Row.FindControl("requestButton") as Button;
+                            BTN.Text = "הגש בקשה";
+                            BTN.Enabled = false;
+                            BTN.ToolTip = "אינך זכאי להירשם לתגבורים";
+                            Label1.Visible = true;
+                        }
                     }
                     else if (req_type == 1 && req_status == 0)
                     {
@@ -176,7 +219,8 @@ public partial class ClassesForStudent : System.Web.UI.Page
         {
             try
             {
-                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type);
+                DateTime reqDate = DateTime.Now.Date;
+                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type, reqDate);
                 int numEffected = req.InsertRequest();
             }
             catch (Exception ex)
@@ -244,7 +288,8 @@ public partial class ClassesForStudent : System.Web.UI.Page
         {
             try
             {
-                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type);
+                DateTime reqDate = DateTime.Now.Date;
+                req = new Request(actLes_id, actlDate, reqStuId, req_status, is_permanent, req_type, reqDate);
                 int numEffected = req.InsertRequest();
 
             }

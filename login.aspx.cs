@@ -61,7 +61,7 @@ public partial class login : System.Web.UI.Page
                 Label errorMem = new Label();
                 errorMem.Text = getStuObj.FirstName + " " + getStuObj.LastName + " יכול להיכנס למערכת";
                 LabelPH.Controls.Add(errorMem);
-                Response.Redirect("student_calendar.aspx");
+                Response.Redirect("student_dashboard.aspx");
             }
         }
 
